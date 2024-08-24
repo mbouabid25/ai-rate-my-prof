@@ -71,6 +71,12 @@
       "subject": "History",
       "stars": "5",
       "review": "Always late"
+    },
+    {
+      "professor": "Michael Smith",
+      "subject": "Arabic",
+      "stars": 5,
+      "review": "Amazing!"
     }
   ]
 }

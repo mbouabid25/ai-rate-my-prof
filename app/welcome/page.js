@@ -24,7 +24,7 @@ export default function GetStarted() {
       alignItems="center"
       minHeight="100vh"
       sx={{
-        backgroundColor: "#f5f5f5", // Light background color for modern look
+        backgroundColor: "#fef5e7", // Light cream background color
         padding: 3,
       }}
     >
