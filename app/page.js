@@ -6,8 +6,7 @@ export default function Home() {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
-      content:
-        "Hi! I am the Rate My Professor support assistant. How can I help you today?",
+      content: "Hi! I am the Rate My Professor support assistant. How can I help you today?",
     },
   ]);
 
@@ -50,7 +49,6 @@ export default function Home() {
     }
   };
 
-  // For uploading reviews to pinecone index
   async function uploadReviews() {
     try {
       const response = await fetch("/api/uploadreview", {
@@ -58,6 +56,17 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          reviews: [
+            {
+              professor: "Dr. Jane Smith",
+              subject: "Physics 101",
+              stars: 4,
+              review: "Dr. Smith explains concepts clearly, but her exams are quite challenging.",
+            }
+            // Add more reviews as needed
+          ],
+        }),
       });
 
       if (!response.ok) {
@@ -73,64 +82,22 @@ export default function Home() {
   }
 
   return (
-    <Box
-      width="100vw"
-      height="100vh"
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Stack
-        direction="column"
-        width="500px"
-        height="700px"
-        border="1px solid black"
-        p={2}
-        spacing={3}
-      >
+    <Box width="100vw" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+      <Stack direction="column" width="500px" height="700px" border="1px solid black" p={2} spacing={3}>
         <Button variant="contained" onClick={uploadReviews}>
           Upload Review
         </Button>
-        <Stack
-          direction="column"
-          spacing={2}
-          flexGrow={1}
-          overflow="auto"
-          maxHeight="100%"
-        >
+        <Stack direction="column" spacing={2} flexGrow={1} overflow="auto" maxHeight="100%">
           {messages.map((message, index) => (
-            <Box
-              key={index}
-              display="flex"
-              justifyContent={
-                message.role === "assistant" ? "flex-start" : "flex-end"
-              }
-            >
-              <Box
-                bgcolor={
-                  message.role === "assistant"
-                    ? "primary.main"
-                    : "secondary.main"
-                }
-                color="white"
-                borderRadius={16}
-                p={3}
-              >
+            <Box key={index} display="flex" justifyContent={message.role === "assistant" ? "flex-start" : "flex-end"}>
+              <Box bgcolor={message.role === "assistant" ? "primary.main" : "secondary.main"} color="white" borderRadius={16} p={3}>
                 {message.content}
               </Box>
             </Box>
           ))}
         </Stack>
         <Stack direction="row" spacing={2}>
-          <TextField
-            label="Message"
-            fullWidth
-            value={message}
-            onChange={(e) => {
-              setMessage(e.target.value);
-            }}
-          />
+          <TextField label="Message" fullWidth value={message} onChange={(e) => setMessage(e.target.value)} />
           <Button variant="contained" onClick={sendMessage}>
             Send
           </Button>
