@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button, Box, Typography, IconButton } from "@mui/material";
 import GitHubIcon from '@mui/icons-material/GitHub';
 import "./welcome.css"; // Import custom CSS for additional styles
+import { Analytics } from "@vercel/analytics/react"
 
 export default function GetStarted() {
   const router = useRouter();
