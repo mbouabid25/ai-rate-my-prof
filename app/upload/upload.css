@@ -1,0 +1,45 @@
+/* upload.css */
+
+/* Importing Roboto font for modern and sleek appearance */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* Set the Roboto font as the default for the body */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f2f5; /* Optional: Add a background color for modern look */
+  color: #333; /* Optional: Text color */
+}
+
+/* Large header style */
+.large-header {
+  font-family: 'Roboto', sans-serif;
+  font-size: 3rem; /* Adjust as needed */
+  font-weight: 700; /* Bold font */
+  margin: 0;
+  padding: 20px;
+}
+
+/* Typewriter effect style */
+.typewriter h2 {
+  font-family: 'Roboto', sans-serif;
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid orange; /* The typewriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Center text */
+  letter-spacing: .15em; /* Adjust as needed */
+  animation: 
+    typing 3.5s steps(40, end),
+    blink-caret .75s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange; }
+}
