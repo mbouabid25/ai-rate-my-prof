@@ -199,7 +199,7 @@ export default function ReviewsPage() {
           >
             <MenuItem value="rating">Rating</MenuItem>
             <MenuItem value="subject">Subject</MenuItem>
-            <MenuItem value="name">Professor's Name</MenuItem>
+            <MenuItem value="name">Professor&apos;s Name</MenuItem> {/* Fixed single quote */}
           </Select>
         </FormControl>
 
