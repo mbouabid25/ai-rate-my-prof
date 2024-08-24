@@ -13,7 +13,7 @@ export default function GetStarted() {
   };
 
   const goToChat = () => {
-    router.push("/chat");
+    router.push("./chat");
   };
 
   return (
