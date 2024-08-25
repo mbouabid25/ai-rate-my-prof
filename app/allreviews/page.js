@@ -15,6 +15,7 @@ import {
   InputLabel,
   Button,
   Chip,
+  Pagination,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import StarIcon from "@mui/icons-material/Star";
@@ -29,6 +30,8 @@ export default function ReviewsPage() {
   const [sortOption, setSortOption] = useState("rating"); // Default sorting by rating
   const [filterOptions, setFilterOptions] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const reviewsPerPage = 15; // Number of reviews per page
 
   useEffect(() => {
     const fetchReviews = () => {
@@ -100,6 +103,15 @@ export default function ReviewsPage() {
       return false;
     });
   });
+
+  const currentReviews = filteredReviews.slice(
+    (currentPage - 1) * reviewsPerPage,
+    currentPage * reviewsPerPage
+  );
+
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+  };
 
   const goToWelcome = () => {
     router.push("/");
@@ -241,7 +253,7 @@ export default function ReviewsPage() {
 
         {/* Reviews Grid */}
         <Grid container spacing={4} justifyContent="center">
-          {filteredReviews.map((review, index) => (
+          {currentReviews.map((review, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Card
                 sx={{
@@ -266,7 +278,8 @@ export default function ReviewsPage() {
                   >
                     {review.subject}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: "#333", mb: 1 }}>
+                  <Typography variant="body2" sx={{ color: "#333"
+                    , mb: 1 }}>
                     {review.review}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
@@ -279,6 +292,17 @@ export default function ReviewsPage() {
             </Grid>
           ))}
         </Grid>
+
+        {/* Pagination Component */}
+        <Pagination
+          count={Math.ceil(filteredReviews.length / reviewsPerPage)}
+          page={currentPage}
+          onChange={handlePageChange}
+          color="primary"
+          showFirstButton
+          showLastButton
+          sx={{ mt: 4 }} // Add margin top for spacing
+        />
 
         {/* Add Review Button */}
         <Button
