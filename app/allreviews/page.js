@@ -118,6 +118,7 @@ export default function ReviewsPage() {
           backgroundColor: "#ffffff",
           boxShadow: "none",
           borderBottom: "1px solid #e0e0e0",
+          fontFamily: "'Roboto', sans-serif",
         }}
       >
         <Toolbar>
@@ -148,6 +149,7 @@ export default function ReviewsPage() {
                 "&:hover": {
                   color: "#1976d2",
                   transform: "translateY(-3px)",
+                  fontFamily: "'Roboto', sans-serif",
                 },
               }}
             >
@@ -163,6 +165,7 @@ export default function ReviewsPage() {
                 "&:hover": {
                   color: "#1976d2",
                   transform: "translateY(-3px)",
+                  fontFamily: "'Roboto', sans-serif",
                 },
               }}
             >
