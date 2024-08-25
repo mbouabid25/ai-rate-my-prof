@@ -1,30 +1,42 @@
+// app/api/uploadreview/route.js
 import { NextResponse } from "next/server";
-import fs from 'fs';
-import path from 'path';
+import { db } from "./firebase";
+import { collection, addDoc } from "firebase/firestore";
 
 export async function POST(req) {
   try {
-    const reviewsFilePath = path.join(process.cwd(), 'data', 'reviews.json');
+    // Log the incoming request
+    console.log("Received a POST request to /api/uploadreview");
 
-    // Read the existing reviews from the file
-    const existingReviewsData = fs.existsSync(reviewsFilePath)
-      ? fs.readFileSync(reviewsFilePath, 'utf8')
-      : JSON.stringify({ reviews: [] });
-    const existingReviews = JSON.parse(existingReviewsData).reviews;
+    // Parse the request body
+    const data = await req.json();
+    console.log("Parsed request data:", data);
 
-    // Read new reviews from the request
-    const rawData = await req.text();
-    const newReviews = JSON.parse(rawData).reviews;
+    // Destructure the data
+    const { professor, subject, stars, review } = data.reviews[0];
+    console.log("Review details:", { professor, subject, stars, review });
 
-    // Append the new reviews to the existing reviews
-    const updatedReviews = [...existingReviews, ...newReviews];
+    // Check if all necessary fields are present
+    if (!professor || !subject || !stars || !review) {
+      throw new Error("Missing required fields");
+    }
 
-    // Write the combined reviews back to the file
-    fs.writeFileSync(reviewsFilePath, JSON.stringify({ reviews: updatedReviews }, null, 2));
+    // Adding the review to Firestore
+    const docRef = await addDoc(collection(db, "reviews"), {
+      professor,
+      subject,
+      stars,
+      review,
+    });
 
-    return NextResponse.json({ message: "Reviews uploaded successfully." });
+    // Log the successful write to Firestore
+    console.log("Review successfully written to Firestore with ID:", docRef.id);
+
+    // Respond with success message
+    return NextResponse.json({ message: "Review submitted successfully.", id: docRef.id });
   } catch (error) {
-    console.error("Error processing request:", error);
+    // Log the error with stack trace for more detail
+    console.error("Error processing review submission:", error.message, error.stack);
     return NextResponse.json({ error: "Failed to process request." }, { status: 500 });
   }
 }

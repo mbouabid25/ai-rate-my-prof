@@ -16,7 +16,14 @@ export default function Upload() {
   const [stars, setStars] = useState(0); // Initial state set to 0 stars
   const [review, setReview] = useState("");
 
+  const goToWelcome = () => {
+    router.push("/");
+  };
+  
   const handleSubmit = async () => {
+    console.log("Submit button clicked");
+    console.log("Form Data:", { professor, subject, stars, review });
+  
     try {
       const response = await fetch("/api/uploadreview", {
         method: "POST",
@@ -34,21 +41,23 @@ export default function Upload() {
           ],
         }),
       });
-
+  
+      console.log("Response received:", response); // Log the response object
+  
       if (!response.ok) {
         const errorText = await response.text();
+        console.error(`Error uploading review: ${response.status} ${errorText}`);
         throw new Error(`Error uploading review: ${response.status} ${errorText}`);
       }
-
-      // Redirect to the chat page after successful upload
-      router.push("/allreviews");
+  
+      console.log("Review submitted successfully");
+      // Consider delaying navigation to see logs
+      setTimeout(() => {
+        router.push("/allreviews");
+      }, 500);
     } catch (error) {
       console.error("Error:", error);
     }
-  };
-
-  const goToWelcome = () => {
-    router.push("/");
   };
 
   return (

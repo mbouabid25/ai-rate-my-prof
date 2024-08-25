@@ -21,7 +21,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import StarIcon from "@mui/icons-material/Star";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import reviewsData from "../../data/reviews.json"; // Adjust path based on your structure
+import { db } from "../api/uploadreview/firebase"; 
+import { collection, getDocs } from "firebase/firestore";
 
 export default function ReviewsPage() {
   const router = useRouter();
@@ -30,8 +31,20 @@ export default function ReviewsPage() {
   const [selectedChips, setSelectedChips] = useState([]); // Chips for dynamic filtering
 
   useEffect(() => {
-    // Simulate fetching data from the JSON file
-    setReviews(reviewsData.reviews);
+    const fetchReviews = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "reviews"));
+        const reviewsList = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setReviews(reviewsList);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    };
+
+    fetchReviews();
   }, []);
 
   // Sorting function based on selected option
@@ -237,37 +250,37 @@ export default function ReviewsPage() {
                     {review.review}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {[...Array(review.stars)].map((_, i) => (
-                      <StarIcon key={i} sx={{ color: "#ffc107" }} />
-                    ))}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+                       {[...Array(review.stars)].map((_, i) => (
+                         <StarIcon key={i} sx={{ color: "#ffc107" }} />
+                       ))}
+                     </Typography>
+                   </CardContent>
+                 </Card>
+               </Grid>
+             ))}
+           </Grid>
 
-        {/* Add Review Button */}
-        <Button
-          variant="contained"
-          onClick={goToUpload}
-          sx={{
-            marginTop: 4,
-            padding: "10px 20px",
-            backgroundColor: "#1976d2",
-            color: "#fff",
-            fontSize: "1rem",
-            borderRadius: 3,
-            transition: "background-color 0.3s, transform 0.3s",
-            "&:hover": {
-              backgroundColor: "#9c27b0",
-              transform: "translateY(-3px)", // Slight lift effect on hover
-            },
-          }}
-        >
-          Add a Review
-        </Button>
-      </Box>
-    </Box>
-  );
-}
+           {/* Add Review Button */}
+           <Button
+             variant="contained"
+             onClick={goToUpload}
+             sx={{
+               marginTop: 4,
+               padding: "10px 20px",
+               backgroundColor: "#1976d2",
+               color: "#fff",
+               fontSize: "1rem",
+               borderRadius: 3,
+               transition: "background-color 0.3s, transform 0.3s",
+               "&:hover": {
+                 backgroundColor: "#9c27b0",
+                 transform: "translateY(-3px)", // Slight lift effect on hover
+               },
+             }}
+           >
+             Add a Review
+           </Button>
+         </Box>
+       </Box>
+     );
+   }
