@@ -92,7 +92,7 @@ export default function Chat() {
               See all reviews
             </Link>
             <Link
-              href="/how-it-works"
+              href="/howitworks"
               underline="none"
               sx={{
                 color: '#333',
