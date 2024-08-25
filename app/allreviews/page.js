@@ -206,7 +206,7 @@ export default function ReviewsPage() {
             >
               <MenuItem value="rating">Rating</MenuItem>
               <MenuItem value="subject">Subject</MenuItem>
-              <MenuItem value="name">Professor's Name</MenuItem>
+              <MenuItem value="name">Professor Name</MenuItem>
             </Select>
           </FormControl>
 
