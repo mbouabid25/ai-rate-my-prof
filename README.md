@@ -1,6 +1,6 @@
 # 📚 AI Rate My Professor
 
-Welcome to the **AI Rate My Professor** project! This application provides an intelligent way to find, review, and analyze professors based on data from Rate My Professor. Using cutting-edge technologies like Pinecone, vector embeddings, and AI, this project offers a seamless user experience for students seeking information about their professors.
+Welcome to the **AI Rate My Professor** project! This application provides an intelligent way to find, review, and analyze professors based on the concept of Rate My Professor. Using cutting-edge technologies like Pinecone, vector embeddings, and AI, this project offers a seamless user experience for students seeking information about their professors.
 
 ## 🌟 Features
 
